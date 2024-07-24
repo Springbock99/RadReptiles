@@ -19,7 +19,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [hasNetworkBalance, setNetworkBalance] = useState(false);
+  // const [hasNetworkBalance, setNetworkBalance] = useState(false);
 
   const erc1155Address = process.env
     .NEXT_PUBLIC_ERC1155_ADDRESS as `0x${string}`;
@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   const handleMouseOverDopeBears = () => {
-    getAllBalance();
+    // getAllBalance();
     setShowDopeBears(true);
   };
 
@@ -55,10 +55,9 @@ export default function Home() {
     enabled: false, // Disable automatic fetching
   });
 
-
   const getAllBalance = useCallback(async () => {
     await refetch();
-  
+
     // Assert balanceData to be of the expected type
     const balances = balanceData as number[];
     if (balances && balances.length > 0) {
@@ -68,29 +67,28 @@ export default function Home() {
       }));
       setAllBalances(input);
       setShowDopeBears(true);
-      setNetworkBalance(true);
+      // setNetworkBalance(true);
     } else {
       setShowDopeBears(false);
-      setNetworkBalance(false);
+      // setNetworkBalance(false);
     }
   }, [balanceData, refetch]);
 
   useEffect(() => {
     console.log("Setting up event listener for balance updates in index page");
-  
+
     const handleBalanceUpdate = () => {
-      console.log("index handle balance")
+      console.log("index handle balance");
       getAllBalance();
     };
-  
-    window.addEventListener('balanceUpdated', handleBalanceUpdate);
-  
+
+    window.addEventListener("balanceUpdated", handleBalanceUpdate);
+
     return () => {
-      window.removeEventListener('balanceUpdated', handleBalanceUpdate);
+      window.removeEventListener("balanceUpdated", handleBalanceUpdate);
       console.log("Cleaning up event listener from index page");
     };
   }, []);
-  
 
   useEffect(() => {
     if (!address) {
@@ -115,11 +113,20 @@ export default function Home() {
     }
   }, [chain, address, getAllBalance]); // Dependency on the network chain
 
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = allBalances
-    ? allBalances.slice(startIndex, endIndex)
-    : [];
+  const currentItems: any[] = [];
+  for (let i = 0; i < 9; i++) {
+    currentItems.push({
+      tokenId: i,
+      balance: "0",
+    });
+  }
+  // const currentItems = balances.map((balance: number, i: number) => ({
+  //   tokenId: i,
+  //   balance: balance.toString(),
+  // }));
+
+  console.log("currentItems", currentItems);
+  // setNetworkBalance(true); // get real balances from contract
 
   return (
     <>
@@ -138,7 +145,7 @@ export default function Home() {
       <header className={styles.header}>
         <div className={`${styles.logo} ${styles.DBLogo}`}>
           <Image
-            src="/DB.png"
+            src="/RR.png"
             alt="WalletConnect Logo"
             height="150"
             width="150"
@@ -172,7 +179,8 @@ export default function Home() {
         </div>
       </header>
       <main className={styles.main}>
-        {showDopeBears && hasNetworkBalance ? (
+        {/* {showDopeBears && hasNetworkBalance ? ( */}
+        {showDopeBears ? (
           <div className={styles.nftGrid}>
             {currentItems.map((item, index) => (
               <div
@@ -184,7 +192,7 @@ export default function Home() {
                   <div className={styles.content}>
                     <ul>
                       <Image
-                        src={`/${index}.png`}
+                        src={`/${index}.jpeg`}
                         alt={`NFT ${item.tokenId}`}
                         className={styles.nftImage}
                         height="250"
@@ -235,7 +243,7 @@ export default function Home() {
           >
             <p>Welcome To Dope Bears Lets see your Tokens</p>
 
-            {hasNetworkBalance ? (
+            {showDopeBears ? (
               <p>lets go.</p>
             ) : (
               <div className={styles.welcomeMessage}>
