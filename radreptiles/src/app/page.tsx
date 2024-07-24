@@ -1,4 +1,5 @@
 import Image from "next/image";
+import image from "../../public/3.png";
 
 export default function Home() {
   return (
@@ -25,6 +26,21 @@ export default function Home() {
               priority
             />
           </a>
+        </div>
+      </div>
+
+      {/* New Welcome Section */}
+      <div className="relative flex flex-col items-center justify-center text-center p-10 mt-24 bg-gray-100 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold mb-4">Welcome to RadReptiles</h1>
+        <div className="relative w-full max-w-md">
+          <Image
+            src="/3.png" // Update with your image path
+            alt="RadReptiles"
+            layout="responsive"
+            width={800} // Adjust as needed
+            height={600} // Adjust as needed
+            className="rounded-lg shadow-lg"
+          />
         </div>
       </div>
 
