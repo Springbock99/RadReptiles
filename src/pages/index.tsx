@@ -179,7 +179,6 @@ export default function Home() {
         </div>
       </header>
       <main className={styles.main}>
-        {/* {showDopeBears && hasNetworkBalance ? ( */}
         {showDopeBears ? (
           <div className={styles.nftGrid}>
             {currentItems.map((item, index) => (
@@ -242,7 +241,7 @@ export default function Home() {
               showDopeBears ? styles.fadeOut : ""
             }`}
           >
-            <p>Welcome To Dope Bears Lets see your Tokens</p>
+            <p>Welcome To Rad Reptiles Lets see your Tokens</p>
 
             {showDopeBears ? (
               <p>lets go.</p>
